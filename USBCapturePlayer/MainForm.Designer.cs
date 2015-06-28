@@ -159,6 +159,7 @@
             this.MinimumSize = new System.Drawing.Size(834, 410);
             this.Name = "MainForm";
             this.Text = "USB Capture Player";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();

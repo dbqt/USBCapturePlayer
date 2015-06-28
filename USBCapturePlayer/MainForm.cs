@@ -255,7 +255,25 @@ namespace USBCapturePlayer
             MainVideoPlayer.Start();
         }
 
+        /// <summary>
+        /// Assures that everything is stopped before exiting.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Stop audio components.
+            CurrentWaveOut.Stop();
+            CurrentWaveIn.StopRecording();
+
+            // Stop video components.
+            MainVideoPlayer.SignalToStop();
+            MainVideoPlayer.WaitForStop();
+        }
+
         #endregion
+
+        
 
     }
 }
