@@ -128,6 +128,7 @@
             this.ActiveButton.TabIndex = 6;
             this.ActiveButton.Text = "Play";
             this.ActiveButton.UseVisualStyleBackColor = true;
+            this.ActiveButton.Click += new System.EventHandler(this.ActiveButton_Click);
             // 
             // MainPanel
             // 

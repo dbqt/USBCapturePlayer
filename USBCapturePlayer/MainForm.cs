@@ -28,16 +28,27 @@ namespace USBCapturePlayer
 
         #region Properties
 
+        /// <summary>
+        /// Collection of video source devices.
+        /// </summary>
         private FilterInfoCollection VideoDevices { get; set; }
+
+        /// <summary>
+        /// Value indicating whether a video is playing.
+        /// </summary>
+        private bool IsPlaying { get; set; }
 
         #endregion
 
 
         #region Methods
 
+        /// <summary>
+        /// Initialize properties.
+        /// </summary>
         private void InitializeProperties()
         {
-            
+            IsPlaying = false;
         }
 
         /// <summary>
@@ -101,13 +112,52 @@ namespace USBCapturePlayer
             }
         }
 
+        /// <summary>
+        /// Activates or desactivates the video and audio player.
+        /// </summary>
+        private void TogglePlayerState()
+        {
+            /*if (IsPlaying)
+            {
+                
+            }
+            else
+            {
+                
+            }*/
+        }
 
         #endregion
+
+        
         
         
         #region Events
 
+        /// <summary>
+        /// Event called when the Active Button is clicked, managing the state of the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ActiveButton_Click(object sender, EventArgs e)
+        {
+            IsPlaying = !IsPlaying;
 
+            TogglePlayerState();
+
+            if (IsPlaying)
+            {
+                ActiveButton.Text = "Stop";
+                VideoSourceSelector.Enabled = false;
+                AudioSourceSelector.Enabled = false;
+            }
+            else
+            {
+                ActiveButton.Text = "Play";
+                VideoSourceSelector.Enabled = true;
+                VideoSourceSelector.Enabled = true;
+            }
+        }
 
         #endregion
     }
