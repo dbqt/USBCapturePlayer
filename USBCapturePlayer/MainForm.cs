@@ -63,6 +63,7 @@ namespace USBCapturePlayer
 
             CurrentWaveIn = new WaveIn();
             CurrentWaveIn.DataAvailable += AudioWaveIn_DataAvailable;
+            CurrentWaveIn.BufferMilliseconds = 50;
             CurrentWaveOut = new WaveOut();
             CurrentWaveOut.DesiredLatency = 100;
             WaveBuffer = null;
