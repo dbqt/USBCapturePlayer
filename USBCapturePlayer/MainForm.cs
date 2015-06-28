@@ -38,7 +38,14 @@ namespace USBCapturePlayer
         /// </summary>
         private bool IsPlaying { get; set; }
 
+        /// <summary>
+        /// Value of width/height ratio of video source.
+        /// </summary>
         private float VideoSourceWHRatio { get; set; }
+
+        private WaveIn CurrentWaveIn { get; set; }
+        private WaveOut CurrentWaveOut { get; set; }
+        private BufferedWaveProvider WaveBuffer { get; set; }
 
         #endregion
 
@@ -51,6 +58,13 @@ namespace USBCapturePlayer
         private void InitializeProperties()
         {
             IsPlaying = false;
+            
+            VideoSourceWHRatio = 1f;
+
+            CurrentWaveIn = new WaveIn();
+            CurrentWaveIn.DataAvailable += AudioWaveIn_DataAvailable;
+            CurrentWaveOut = new WaveOut();
+            WaveBuffer = null;
         }
 
         /// <summary>
@@ -123,16 +137,33 @@ namespace USBCapturePlayer
         {
             if (IsPlaying)
             {
-                // Link video input device to MainVideoPlayer.
+                // Link video input device.
                 VideoCaptureDevice videoCaptureDevice = new VideoCaptureDevice(VideoDevices[VideoSourceSelector.SelectedIndex].MonikerString);
                 VideoSourceWHRatio = ((float)(videoCaptureDevice.VideoCapabilities.FirstOrDefault().FrameSize.Width)) / ((float)(videoCaptureDevice.VideoCapabilities.FirstOrDefault().FrameSize.Height));
                 MainVideoPlayer.VideoSource = videoCaptureDevice;
 
-                // Start playing the video.
+                // Link audio input device to WaveIn.
+                CurrentWaveIn.DeviceNumber = AudioSourceSelector.SelectedIndex;
+
+                // Create WaveBuffer with the WaveIn.
+                WaveBuffer = new BufferedWaveProvider(CurrentWaveIn.WaveFormat);
+                WaveBuffer.DiscardOnBufferOverflow = true;
+
+                // Initialize WaveOut with the WaveBuffer.
+                CurrentWaveOut.Init(WaveBuffer);
+
+                // Start playing the video and audio.
                 MainVideoPlayer.Start();
+                CurrentWaveIn.StartRecording();
+                CurrentWaveOut.Play();
             }
             else
             {
+                // Stop audio components.
+                CurrentWaveOut.Stop();
+                CurrentWaveIn.StopRecording();
+
+                // Stop video components.
                 MainVideoPlayer.SignalToStop();
                 MainVideoPlayer.WaitForStop();
             }
@@ -168,6 +199,16 @@ namespace USBCapturePlayer
                 VideoSourceSelector.Enabled = true;
                 VideoSourceSelector.Enabled = true;
             }
+        }
+
+        /// <summary>
+        /// Feed the audio buffer when data is available.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void AudioWaveIn_DataAvailable(object sender, WaveInEventArgs e)
+        {
+            WaveBuffer.AddSamples(e.Buffer, 0, e.BytesRecorded);
         }
 
         #endregion
