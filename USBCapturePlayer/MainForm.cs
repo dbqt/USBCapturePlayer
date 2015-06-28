@@ -240,6 +240,22 @@ namespace USBCapturePlayer
             WaveBuffer.AddSamples(e.Buffer, 0, e.BytesRecorded);
         }
 
+        /// <summary>
+        /// When the window size changes, stop the video, resize then restart the video.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            MainVideoPlayer.SignalToStop();
+            MainVideoPlayer.WaitForStop();
+            
+            ResizeVideoPlayer();
+
+            MainVideoPlayer.Start();
+        }
+
         #endregion
+
     }
 }
