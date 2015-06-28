@@ -154,6 +154,7 @@ namespace USBCapturePlayer
                 CurrentWaveOut.Init(WaveBuffer);
 
                 // Start playing the video and audio.
+                ResizeVideoPlayer();
                 MainVideoPlayer.Start();
                 CurrentWaveIn.StartRecording();
                 CurrentWaveOut.Play();
@@ -168,6 +169,30 @@ namespace USBCapturePlayer
                 MainVideoPlayer.SignalToStop();
                 MainVideoPlayer.WaitForStop();
             }
+        }
+
+        private void ResizeVideoPlayer()
+        {
+
+            float PanelWHRatio = ((float)(MainPanel.Width)) / ((float)(MainPanel.Height));
+
+            // Frame is larger in width than its height.
+            if (PanelWHRatio < VideoSourceWHRatio)
+            {
+                MainVideoPlayer.Width = MainPanel.Width;
+                MainVideoPlayer.Height = (int)(MainPanel.Width / VideoSourceWHRatio);
+            }
+            //Frame is higher in height than its width.
+            else
+            {
+                MainVideoPlayer.Height = MainPanel.Height;
+                MainVideoPlayer.Width = (int)(MainPanel.Height * VideoSourceWHRatio);
+            }
+            
+            //Reposition
+            int leftside = (MainPanel.Width - MainVideoPlayer.Width) / 2;
+            int upside = (MainPanel.Height - MainVideoPlayer.Height) / 2;
+            MainVideoPlayer.Location = new Point(leftside, upside); 
         }
 
         #endregion
