@@ -281,6 +281,16 @@ namespace USBCapturePlayer
         }
 
         /// <summary>
+        /// Force every thread to exit.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        /// <summary>
         /// Changes the output volume.
         /// </summary>
         /// <param name="sender"></param>
@@ -291,6 +301,8 @@ namespace USBCapturePlayer
         }
 
         #endregion
+
+        
 
     }
 }
