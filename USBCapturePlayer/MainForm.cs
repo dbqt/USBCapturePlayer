@@ -272,7 +272,19 @@ namespace USBCapturePlayer
             MainVideoPlayer.WaitForStop();
         }
 
+        /// <summary>
+        /// Changes the output volume.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VolumeBar_ValueChanged(object sender, EventArgs e)
+        {
+            CurrentWaveOut.Volume = (float)(VolumeBar.Value) / 10.0f;
+        }
+
         #endregion
+
+        
 
         
 

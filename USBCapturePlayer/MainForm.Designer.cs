@@ -118,6 +118,7 @@
             this.VolumeBar.TabIndex = 4;
             this.VolumeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.VolumeBar.Value = 5;
+            this.VolumeBar.ValueChanged += new System.EventHandler(this.VolumeBar_ValueChanged);
             // 
             // ActiveButton
             // 
