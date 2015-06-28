@@ -171,25 +171,28 @@ namespace USBCapturePlayer
             }
         }
 
+        /// <summary>
+        /// Resizes the video player to keep the right ratio.
+        /// </summary>
         private void ResizeVideoPlayer()
         {
 
             float PanelWHRatio = ((float)(MainPanel.Width)) / ((float)(MainPanel.Height));
 
-            // Frame is larger in width than its height.
+            // Panel is larger in width than its height.
             if (PanelWHRatio < VideoSourceWHRatio)
             {
                 MainVideoPlayer.Width = MainPanel.Width;
                 MainVideoPlayer.Height = (int)(MainPanel.Width / VideoSourceWHRatio);
             }
-            //Frame is higher in height than its width.
+            // Panel is higher in height than its width.
             else
             {
                 MainVideoPlayer.Height = MainPanel.Height;
                 MainVideoPlayer.Width = (int)(MainPanel.Height * VideoSourceWHRatio);
             }
             
-            //Reposition
+            //Reposition the player.
             int leftside = (MainPanel.Width - MainVideoPlayer.Width) / 2;
             int upside = (MainPanel.Height - MainVideoPlayer.Height) / 2;
             MainVideoPlayer.Location = new Point(leftside, upside); 
