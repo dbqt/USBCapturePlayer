@@ -156,7 +156,7 @@
             this.ClientSize = new System.Drawing.Size(818, 372);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.flowLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(685, 410);
+            this.MinimumSize = new System.Drawing.Size(834, 410);
             this.Name = "MainForm";
             this.Text = "USB Capture Player";
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
