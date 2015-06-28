@@ -1,4 +1,4 @@
-# USBCapturePlayer
+# Video Capture Player
 Play on the screen any video and audio input.
 
 Please visit the wiki for more information :
