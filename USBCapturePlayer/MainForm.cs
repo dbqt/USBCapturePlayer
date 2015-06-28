@@ -38,6 +38,8 @@ namespace USBCapturePlayer
         /// </summary>
         private bool IsPlaying { get; set; }
 
+        private float VideoSourceWHRatio { get; set; }
+
         #endregion
 
 
@@ -81,6 +83,7 @@ namespace USBCapturePlayer
             {
                 // There was a problem in loading video sources, disabling the source selector.
                 VideoSourceSelector.Enabled = false;
+                ActiveButton.Enabled = false;
             }
 
             try
@@ -109,6 +112,7 @@ namespace USBCapturePlayer
             {
                 // There was a problem in loading audio sources, disabling the source selector.
                 AudioSourceSelector.Enabled = false;
+                ActiveButton.Enabled = false;
             }
         }
 
@@ -117,14 +121,21 @@ namespace USBCapturePlayer
         /// </summary>
         private void TogglePlayerState()
         {
-            /*if (IsPlaying)
+            if (IsPlaying)
             {
-                
+                // Link video input device to MainVideoPlayer.
+                VideoCaptureDevice videoCaptureDevice = new VideoCaptureDevice(VideoDevices[VideoSourceSelector.SelectedIndex].MonikerString);
+                VideoSourceWHRatio = ((float)(videoCaptureDevice.VideoCapabilities.FirstOrDefault().FrameSize.Width)) / ((float)(videoCaptureDevice.VideoCapabilities.FirstOrDefault().FrameSize.Height));
+                MainVideoPlayer.VideoSource = videoCaptureDevice;
+
+                // Start playing the video.
+                MainVideoPlayer.Start();
             }
             else
             {
-                
-            }*/
+                MainVideoPlayer.SignalToStop();
+                MainVideoPlayer.WaitForStop();
+            }
         }
 
         #endregion
