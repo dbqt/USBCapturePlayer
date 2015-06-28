@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AForge.Video.DirectShow;
+using NAudio.Wave;
 
 namespace USBCapturePlayer
 {
@@ -39,6 +40,9 @@ namespace USBCapturePlayer
             
         }
 
+        /// <summary>
+        /// Initialize both video and audio sources selectors.
+        /// </summary>
         private void InitializeSelectors()
         {
             try
@@ -66,6 +70,34 @@ namespace USBCapturePlayer
             {
                 // There was a problem in loading video sources, disabling the source selector.
                 VideoSourceSelector.Enabled = false;
+            }
+
+            try
+            {
+                // Initialize audio sources.
+                AudioSourceSelector.Items.Clear();
+                int waveInDevices = WaveIn.DeviceCount;
+
+                if (waveInDevices == 0)
+                {
+                    throw new ApplicationException();
+                }
+
+                // Add all devices to source selector.
+                for (int waveInDevice = 0; waveInDevice < waveInDevices; waveInDevice++)
+                {
+                    WaveInCapabilities deviceInfo = WaveIn.GetCapabilities(waveInDevice);
+                    AudioSourceSelector.Items.Add(deviceInfo.ProductName);
+                }
+
+                // Enable source selector.
+                AudioSourceSelector.SelectedIndex = 0;
+                AudioSourceSelector.Enabled = true;
+            }
+            catch (Exception)
+            {
+                // There was a problem in loading audio sources, disabling the source selector.
+                AudioSourceSelector.Enabled = false;
             }
         }
 
