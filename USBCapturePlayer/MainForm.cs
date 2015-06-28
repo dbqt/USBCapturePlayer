@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using AForge.Video.DirectShow;
 using NAudio.Wave;
 
@@ -16,6 +12,9 @@ namespace USBCapturePlayer
     {
         #region Constructors
 
+        /// <summary>
+        /// Initialize everything.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -43,8 +42,19 @@ namespace USBCapturePlayer
         /// </summary>
         private float VideoSourceWHRatio { get; set; }
 
+        /// <summary>
+        /// Audio input wave.
+        /// </summary>
         private WaveIn CurrentWaveIn { get; set; }
+
+        /// <summary>
+        /// Audio output wave.
+        /// </summary>
         private WaveOut CurrentWaveOut { get; set; }
+
+        /// <summary>
+        /// Audio buffer between input and output.
+        /// </summary>
         private BufferedWaveProvider WaveBuffer { get; set; }
 
         #endregion
@@ -200,8 +210,6 @@ namespace USBCapturePlayer
         }
 
         #endregion
-
-        
         
         
         #region Events
@@ -283,10 +291,6 @@ namespace USBCapturePlayer
         }
 
         #endregion
-
-        
-
-        
 
     }
 }
