@@ -198,7 +198,7 @@ namespace USBCapturePlayer
             {
                 ActiveButton.Text = "Play";
                 VideoSourceSelector.Enabled = true;
-                VideoSourceSelector.Enabled = true;
+                AudioSourceSelector.Enabled = true;
             }
         }
 
