@@ -301,8 +301,6 @@ namespace USBCapturePlayer
         }
 
         #endregion
-
         
-
     }
 }
